@@ -1,0 +1,23 @@
+{
+  "overview": "Complete organizational website for Azad Hind United Squad — a military-style youth training organization under the Ministry of Youth Affairs & Sports, Govt. of India. Features public sections for the organization's mission, leadership, training programs, gallery, admission info, and a protected admin panel for content management.",
+  "features": [
+    "Military-themed homepage with auto-sliding image carousel and hero section",
+    "Leadership, training, camps, and branches sections with full organization data",
+    "Photo and video gallery with lightbox preview and admin upload/delete management",
+    "Protected admin panel with Internet Identity login for content management",
+    "Contact form with backend storage, Google Map embed, and admission details",
+    "Mobile-responsive army/NCC design with khaki, dark green, black, and white theme"
+  ],
+  "category": "organization",
+  "tags": [
+    "military",
+    "youth",
+    "organization",
+    "ncc",
+    "gallery",
+    "admin-panel",
+    "patriotic",
+    "training"
+  ],
+  "last_updated": "2026-04-20T08:59:57.831Z"
+}

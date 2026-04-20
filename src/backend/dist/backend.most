@@ -1,0 +1,140 @@
+// Version: 1.0.0
+type ActivityCategory__423458172 = {#event; #training};
+type Activity__191200494 =
+  {
+    category : ActivityCategory__423458172;
+    description : Text;
+    id : Id__389469852;
+    name : Text
+  };
+type AdmissionFees__763051658 = {admission : Nat; monthly : Nat};
+type AdmissionInfo__1059083945 =
+  {documents : [Text]; fees : AdmissionFees__763051658};
+type Branch__536108858 =
+  {
+    address : Text;
+    contactPerson : Text;
+    id : Id__389469852;
+    isHQ : Bool;
+    name : Text;
+    phone : Text
+  };
+type Camp__236098237 =
+  {
+    activities : [Text];
+    description : Text;
+    duration : Text;
+    id : Id__389469852;
+    name : Text
+  };
+type ContactSubmission__93684224 =
+  {
+    email : Text;
+    id : Id__389469852;
+    isRead : Bool;
+    message : Text;
+    name : Text;
+    submittedAt : Timestamp__301639476
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__246066408 = Blob;
+type GalleryItem__85588320 =
+  {
+    blob : ExternalBlob__246066408;
+    id : Id__389469852;
+    isActive : Bool;
+    mediaType : MediaType__346103953;
+    thumbnailBlob : ?ExternalBlob__246066408;
+    title : Text;
+    uploadedAt : Timestamp__301639476
+  };
+type Id__389469852 = Nat;
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type MediaType__346103953 = {#photo; #video};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OrgInfo__931918010 =
+  {
+    address : Text;
+    affiliationNo : Text;
+    department : Text;
+    email : Text;
+    logoBlob : ?ExternalBlob__246066408;
+    mission : [Text];
+    name : Text;
+    phone : Text;
+    registrationNo : Text;
+    tagline : Text
+  };
+type TeamMember__16370082 =
+  {
+    id : Id__389469852;
+    name : Text;
+    order : Nat;
+    photoBlob : ?ExternalBlob__246066408;
+    role : TeamRole__572867888;
+    title : Text
+  };
+type TeamRole__572867888 = {#leadership; #senior; #trainer};
+type Timestamp__301639476 = Int;
+type UserRole__1054455867 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable activities :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Activity__191200494]];
+      var elementIndex : Nat__490723111
+    };
+  stable activityCounter : {var value : Nat};
+  stable admissionInfo : {var value : ?AdmissionInfo__1059083945};
+  stable branchCounter : {var value : Nat};
+  stable branches :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Branch__536108858]];
+      var elementIndex : Nat__490723111
+    };
+  stable campCounter : {var value : Nat};
+  stable camps :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Camp__236098237]];
+      var elementIndex : Nat__490723111
+    };
+  stable contactCounter : {var value : Nat};
+  stable contactSubmissions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?ContactSubmission__93684224]];
+      var elementIndex : Nat__490723111
+    };
+  stable galleryCounter : {var value : Nat};
+  stable galleryItems :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?GalleryItem__85588320]];
+      var elementIndex : Nat__490723111
+    };
+  stable orgInfo : {var value : ?OrgInfo__931918010};
+  stable teamCounter : {var value : Nat};
+  stable teamMembers :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?TeamMember__16370082]];
+      var elementIndex : Nat__490723111
+    }
+};

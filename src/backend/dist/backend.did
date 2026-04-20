@@ -1,0 +1,163 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = int;
+type TeamRole = 
+ variant {
+   leadership;
+   senior;
+   trainer;
+ };
+type TeamMember = 
+ record {
+   id: Id;
+   name: text;
+   order: nat;
+   photoBlob: opt ExternalBlob;
+   role: TeamRole;
+   title: text;
+ };
+type OrgInfo = 
+ record {
+   address: text;
+   affiliationNo: text;
+   department: text;
+   email: text;
+   logoBlob: opt ExternalBlob;
+   mission: vec text;
+   name: text;
+   phone: text;
+   registrationNo: text;
+   tagline: text;
+ };
+type MediaType = 
+ variant {
+   photo;
+   video;
+ };
+type Id = nat;
+type GalleryItem = 
+ record {
+   "blob": ExternalBlob;
+   id: Id;
+   isActive: bool;
+   mediaType: MediaType;
+   thumbnailBlob: opt ExternalBlob;
+   title: text;
+   uploadedAt: Timestamp;
+ };
+type ExternalBlob = blob;
+type ContactSubmission = 
+ record {
+   email: text;
+   id: Id;
+   isRead: bool;
+   message: text;
+   name: text;
+   submittedAt: Timestamp;
+ };
+type Camp = 
+ record {
+   activities: vec text;
+   description: text;
+   duration: text;
+   id: Id;
+   name: text;
+ };
+type Branch = 
+ record {
+   address: text;
+   contactPerson: text;
+   id: Id;
+   isHQ: bool;
+   name: text;
+   phone: text;
+ };
+type AdmissionInfo = 
+ record {
+   documents: vec text;
+   fees: AdmissionFees;
+ };
+type AdmissionFees = 
+ record {
+   admission: nat;
+   monthly: nat;
+ };
+type ActivityCategory = 
+ variant {
+   event;
+   training;
+ };
+type Activity = 
+ record {
+   category: ActivityCategory;
+   description: text;
+   id: Id;
+   name: text;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addActivity: (name: text, description: text, category: ActivityCategory) ->
+   (Id);
+  addBranch: (name: text, address: text, contactPerson: text, phone: 
+   text, isHQ: bool) -> (Id);
+  addCamp: (name: text, duration: text, description: text, campActivities:
+   vec text) -> (Id);
+  addGalleryItem: (title: text, mediaType: MediaType, "blob": ExternalBlob,
+   thumbnailBlob: opt ExternalBlob) -> (Id);
+  addTeamMember: (name: text, title: text, role: TeamRole, photoBlob:
+   opt ExternalBlob, order: nat) -> (Id);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  deleteActivity: (id: Id) -> ();
+  deleteBranch: (id: Id) -> ();
+  deleteGalleryItem: (id: Id) -> ();
+  deleteTeamMember: (id: Id) -> ();
+  getActivities: () -> (vec Activity) query;
+  getAdmissionInfo: () -> (opt AdmissionInfo) query;
+  getBranches: () -> (vec Branch) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCamps: () -> (vec Camp) query;
+  getContactSubmissions: () -> (vec ContactSubmission);
+  getGalleryItems: () -> (vec GalleryItem) query;
+  getOrgInfo: () -> (opt OrgInfo) query;
+  getTeamMembers: () -> (vec TeamMember) query;
+  isCallerAdmin: () -> (bool) query;
+  markContactRead: (id: Id) -> ();
+  submitContact: (name: text, email: text, message: text) -> (Id);
+  updateActivity: (id: Id, name: text, description: text, category:
+   ActivityCategory) -> ();
+  updateAdmissionInfo: (info: AdmissionInfo) -> ();
+  updateBranch: (id: Id, name: text, address: text, contactPerson: text,
+   phone: text, isHQ: bool) -> ();
+  updateCamp: (id: Id, name: text, duration: text, description: text,
+   campActivities: vec text) -> ();
+  updateOrgInfo: (info: OrgInfo) -> ();
+  updateOrgLogo: ("blob": ExternalBlob) -> ();
+  updateTeamMember: (id: Id, name: text, title: text, role: TeamRole,
+   photoBlob: opt ExternalBlob, order: nat) -> ();
+}
