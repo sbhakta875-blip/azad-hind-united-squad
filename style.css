@@ -1,0 +1,14 @@
+:root {
+    --army-green: #4b5320;
+    --khaki: #c3b091;
+    --dark-green: #2d3a27;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.hero-slider img {
+    filter: brightness(70%);
+}
